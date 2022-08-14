@@ -1,3 +1,5 @@
+let count=0
+
 class ANode {
 	constructor(public data: number, public left?: ANode, public right?: ANode) {}
 }
@@ -86,6 +88,33 @@ class BST {
 		}
 		return tempNode;
 	}
+
+
+	sort() {
+		const arr: ANode[] = []
+		this.pushToArray(this.parent, arr)
+		return arr
+	}
+
+/* 
+
+*/
+	private pushToArray(node: ANode | undefined, arr: ANode[]): void {
+		count++
+		if(!node) return 
+		if (node.left === undefined) {
+			arr.push(node)
+			this.pushToArray(node.right, arr)
+			return
+		}
+
+		this.pushToArray(node.left, arr)
+		arr.push(node)
+		this.pushToArray(node.right, arr)
+		return
+	}
+
+	
 }
 
 const myBts = new BST(new ANode(50));
@@ -108,6 +137,6 @@ myBts.add(21);
 myBts.add(170);
 myBts.add(60);
 
-console.log(myBts.findWithRecusion(30));
-console.log(myBts.findmin());
-console.log(myBts.findMax());
+
+console.log(myBts.sort().map(node => node.data))
+console.log(count)
